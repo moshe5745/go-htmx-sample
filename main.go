@@ -1,15 +1,17 @@
 package main
 
 import (
-	"net/http"
-	
+	"context"
+
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	e := echo.New()
+
+	component := hello("John Doe")
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		return component.Render(context.Background(), c.Response().Writer)
 	})
 	e.Logger.Fatal(e.Start(":1323"))
 }
